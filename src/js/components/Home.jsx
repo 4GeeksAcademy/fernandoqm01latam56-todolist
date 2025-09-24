@@ -9,7 +9,7 @@ const Home = () => {
 	const [list, setList] = useState(["Lavar la ropa ", "Limpiar la casa", "Hacer la cena"]);
 
 	const handelClick = () => {
-		if (newTodo.length != 0) {
+		if (newTodo.length != 0 && newTodo.trim() === " ") {
 			setList([...list, newTodo]);
 		}
 		else {
@@ -42,8 +42,8 @@ const Home = () => {
 					<ul className="list-group p2">
 						{list.map((Todo, indice) => {
 							return (
-								<li className="list-group-item p-1 list-group-item d-flex justify-content-between align-items-center" >
-									{Todo} <button className="btn btn-light" onClick={() => deletTarea(indice)}>X</button>
+								<li key={indice} className="list-group-item p-1 list-group-item d-flex justify-content-between align-items-center" >
+									{Todo} <button id="buttonx" className="btn" onClick={() => deletTarea(indice)}>X</button>
 								</li>
 							);
 						})
