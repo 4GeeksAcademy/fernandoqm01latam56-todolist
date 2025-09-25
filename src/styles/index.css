@@ -1,12 +1,9 @@
-
-#buttonx {
-    color: rgb(255, 255, 255);
+.btn1 {
+    color: white;
     background-color: white;
-    border: 0cap;
-    
+    border: 1px solid white;
 }
-.btn :hover {
-    
+.btn1:hover {
     color: black;
-    background-color: black;
+    background-color: aqua;
 }
