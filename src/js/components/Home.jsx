@@ -1,61 +1,73 @@
-
 import React, { useState } from "react";
 
-
-//create your first component
 const Home = () => {
 
 	const [newTodo, setNewTodo] = useState("");
-	const [list, setList] = useState(["Lavar la ropa ", "Limpiar la casa", "Hacer la cena"]);
+	const [list, setList] = useState(["Lavar la ropa", "Limpiar la casa", "Ponerme al dia", "Estudiar"]);
+	const [hoverIndex, setHoverIndex] = useState(null);
 
-	const handelClick = () => {
-
-		if (newTodo.length != 0 && newTodo.trim() === " ") {
-			setList([...list, newTodo]);
-		}
-		else if (newTodo.trim() >= " ") {
-			setList([...list, newTodo]);
-		}
-		else {
-			alert("Introduce una tarea")
-		}
-	}
+	const addTodo = () => {
+		const tarea = newTodo.trim();
+		if (tarea === "") return;
+		setList([...list, tarea]);
+		setNewTodo("");
+	};
 
 	const handleChange = (event) => {
 		setNewTodo(event.target.value);
-	}
+	};
 
-	const deletTarea = (indice) => {
-		const listaNueva = list.filter((Todo, i) => i !== indice)
-		setList(listaNueva);
-	}
+	const handleKeyDown = (event) => {
+		if (event.key === "Enter") {
+			addTodo();
+		}
+	};
+
+	const deleteTarea = (indice) => {
+		const nuevaLista = list.filter((_, i) => i !== indice);
+		setList(nuevaLista);
+	};
 
 	return (
 		<div className="text-center p-2">
-
 			<h1 className="text-center mt-5">Todo List React</h1>
+
 			<div className="container p-2 mt-2">
-				<div className="d-flex" >
-
-					<input type="text" className="form-control" onChange={handleChange} />
-
-					<button className="btn btn-light" onClick={handelClick}>Agregar Tarea</button>
-
+				<div className="d-flex">
+					<input
+						type="text"
+						className="form-control"
+						value={newTodo}
+						onChange={handleChange}
+						onKeyDown={handleKeyDown}
+						placeholder="Escribe una nueva tarea..."
+					/>
+					<button className="btn btn-info ms-2" onClick={addTodo}>
+						Agregar
+					</button>
 				</div>
-				<div>
-					<ul className="list-group p2">
-						{list.map((Todo, indice) => {
-							return (
-								<li key={indice} className="list-group-item p-1 list-group-item d-flex justify-content-between align-items-center" >
-									{Todo} <button className="btn1" onClick={() => deletTarea(indice)}>X</button>
-								</li>
-							);
-						})
-						}
-					</ul>
-				</div>
+
+				<ul className="list-group p-2 mt-3">
+					{list.map((todo, indice) => (
+						<li
+							key={indice}
+							className="list-group-item d-flex justify-content-between align-items-center"
+							onMouseEnter={() => setHoverIndex(indice)}
+							onMouseLeave={() => setHoverIndex(null)}
+						>
+							{todo}
+							{hoverIndex === indice && (
+								<button
+									className="btn btn-info"
+									onClick={() => deleteTarea(indice)}
+								>
+									X
+								</button>
+							)}
+						</li>
+					))}
+				</ul>
 			</div>
-
 		</div>
 	);
 };
