@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
 const Home = () => {
-
 	const [newTodo, setNewTodo] = useState("");
-	const [list, setList] = useState(["Lavar la ropa", "Limpiar la casa", "Ponerme al dia", "Estudiar"]);
+	const [list, setList] = useState(["Lavar la ropa", "Limpiar la casa", "Ponerme al día", "Estudiar"]);
 	const [hoverIndex, setHoverIndex] = useState(null);
 
 	const addTodo = () => {
@@ -48,24 +47,30 @@ const Home = () => {
 				</div>
 
 				<ul className="list-group p-2 mt-3">
-					{list.map((todo, indice) => (
-						<li
-							key={indice}
-							className="list-group-item d-flex justify-content-between align-items-center"
-							onMouseEnter={() => setHoverIndex(indice)}
-							onMouseLeave={() => setHoverIndex(null)}
-						>
-							{todo}
-							{hoverIndex === indice && (
-								<button
-									className="btn btn-info"
-									onClick={() => deleteTarea(indice)}
-								>
-									X
-								</button>
-							)}
+					{list.length === 0 ? (
+						<li className="list-group-item"> 
+							No hay Tareas, Agrega alguna.
 						</li>
-					))}
+					) : (
+						list.map((todo, indice) => (
+							<li
+								key={indice}
+								className="list-group-item d-flex justify-content-between align-items-center"
+								onMouseEnter={() => setHoverIndex(indice)}
+								onMouseLeave={() => setHoverIndex(null)}
+							>
+								{todo}
+								{hoverIndex === indice && (
+									<button
+										className="btn btn-info"
+										onClick={() => deleteTarea(indice)}
+									>
+										X
+									</button>
+								)}
+							</li>
+						))
+					)}
 				</ul>
 			</div>
 		</div>
